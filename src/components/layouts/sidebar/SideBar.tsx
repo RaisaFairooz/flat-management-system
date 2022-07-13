@@ -57,7 +57,7 @@ export default function NavbarMinimalColored({ children }: any) {
   ));
 
   return (
-    <Navbar height={720} width={{ base: 80 }} p="md" className={classes.navbar}>
+    <Navbar height={780} width={{ base: 80 }} p="md" className={classes.navbar}>
       <Center>A</Center>
       <Navbar.Section grow mt={50}>
         <Group direction="column" align="center" spacing={0}>

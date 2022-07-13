@@ -4,6 +4,8 @@ import LayOut from "@/components/layouts";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import Router from "next/router";
+import { NotificationsProvider } from "@mantine/notifications";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
@@ -13,11 +15,17 @@ Router.events.on("routeChangeStart", (url) => {
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
+const queryClient = new QueryClient();
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <LayOut>
-      <Component {...pageProps} />
-    </LayOut>
+    <QueryClientProvider client={queryClient}>
+      <LayOut>
+        <NotificationsProvider>
+          <Component {...pageProps} />
+        </NotificationsProvider>
+      </LayOut>
+    </QueryClientProvider>
   );
 }
 

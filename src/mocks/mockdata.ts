@@ -1,22 +1,15 @@
 import {
-  CreditCard,
-  BuildingBank,
-  Repeat,
   ReceiptRefund,
   Receipt,
-  ReceiptTax,
   Report,
-  CashBanknote,
   Coin,
   Home2,
   Gauge,
-  DeviceDesktopAnalytics,
-  Fingerprint,
-  CalendarStats,
   User,
   Settings,
   Home,
   Man,
+  PlaylistAdd,
 } from "tabler-icons-react";
 export const adminMockData = [
   // { title: "Credit cards", icon: CreditCard, color: "violet" },
@@ -46,16 +39,16 @@ export const adminMockData = [
     href: "/admin/dashboard/staffs",
   },
   {
-    title: "Complaints",
-    icon: Report,
+    title: "Residents",
+    icon: Man,
     color: "pink",
-    href: "/admin/dashboard/complaints",
+    href: "/admin/dashboard/residents",
   },
   {
-    title: "Owners and Residents",
+    title: "Owners",
     icon: Coin,
     color: "red",
-    href: "/admin/dashboard/owners&residents",
+    href: "/admin/dashboard/owners",
   },
   // { title: "Cashback", icon: CashBanknote, color: "orange" },
 ];
@@ -66,3 +59,7 @@ export const sidebarMockData = [
   { icon: User, label: "Account", href: "/admin/account" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
+
+export const roles = ["Editor", "Owner", "Resident", "Staff"];
+
+export const department = ["cleaning", "guard"];

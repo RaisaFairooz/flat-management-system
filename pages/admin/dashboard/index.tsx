@@ -23,7 +23,7 @@ export default function ActionsGrid() {
   ));
 
   return (
-    <>
+    <div className="center">
       <Card withBorder radius="md" className={classes.card}>
         <SimpleGrid
           cols={2}
@@ -37,6 +37,6 @@ export default function ActionsGrid() {
           {items}
         </SimpleGrid>
       </Card>
-    </>
+    </div>
   );
 }
