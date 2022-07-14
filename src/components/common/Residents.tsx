@@ -39,8 +39,7 @@ export const handleDelete = async (
 
 const Residents = () => {
   const { data, isError, isLoading, error } = useFetchQuery("residents");
-  const open = useModalStore((state) => state.open);
-  const setOpen = useModalStore((state) => state.setOpen);
+  const [editing, setEditing] = useState(false);
   const [selected, setSelected] = useState(null);
   const queryClient = useQueryClient();
   if (isLoading) {
@@ -79,7 +78,7 @@ const Residents = () => {
               department: "demo",
               salary: 0,
             });
-            setOpen();
+            setEditing(true);
           }}
           style={{
             cursor: "pointer",
@@ -104,7 +103,6 @@ const Residents = () => {
   ));
   return (
     <>
-      <Search />
       <Table horizontalSpacing="xl" verticalSpacing="xl" fontSize="lg">
         <thead>
           <tr>
@@ -121,7 +119,11 @@ const Residents = () => {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-      <ModalComponent open={open} setOpen={setOpen} message={`Edit owner`}>
+      <ModalComponent
+        open={editing}
+        setOpen={setEditing}
+        message={`Edit owner`}
+      >
         {selected && (
           <EditUserByRole role="resident" type="edit" data={selected} />
         )}

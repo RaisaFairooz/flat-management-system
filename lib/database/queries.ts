@@ -1,3 +1,4 @@
+//TODO:Owner add
 export const signupOwners = function (
   name: string,
   nid: string,
@@ -17,6 +18,7 @@ export const signupOwners = function (
       "')",
   };
 };
+//TODO: Owner update
 export const updateOwners = function (
   name: string,
   phone_number: string,
@@ -27,6 +29,9 @@ export const updateOwners = function (
     query: `UPDATE owners SET name="${name}", phone_number="${phone_number}", address_id=${address_id} WHERE id=${id}`,
   };
 };
+
+//TODO:Resident add
+
 export const signupResidents = function (
   name: string,
   nid: string,
@@ -53,6 +58,9 @@ export const signupResidents = function (
       "')",
   };
 };
+
+//TODO:Resident update
+
 export const updateResidents = function (
   name: string,
   phone_number: string,
@@ -66,6 +74,8 @@ export const updateResidents = function (
     query: `UPDATE residents SET name="${name}", phone_number="${phone_number}",occupation="${occupation}",family_member=${family_member}, address_id=${address_id} WHERE id=${id}`,
   };
 };
+
+//TODO:Staff add
 export const signupStaff = function (
   name: string,
   nid: string,
@@ -92,6 +102,8 @@ export const signupStaff = function (
       "')",
   };
 };
+
+//TODO:Staff update
 export const updateStaff = function (
   name: string,
   phone_number: string,
@@ -105,6 +117,8 @@ export const updateStaff = function (
     query: `UPDATE staffs SET name="${name}", phone_number="${phone_number}", department="${department}", salary=${salary}, address_id=${address_id} WHERE id=${id}`,
   };
 };
+
+//TODO:Address add
 export const insertAddress = function (
   village: string = "",
   postal_code: string,
@@ -121,6 +135,8 @@ export const insertAddress = function (
       "')",
   };
 };
+
+//TODO:Address update
 export const updateAddress = function (
   village: string = "",
   postal_code: string,
@@ -136,6 +152,8 @@ export const fetch = () => {
     query: "SELECT LAST_INSERT_ID()",
   };
 };
+
+//FIXME:
 export const signin = function (
   role: string,
   name: string,
@@ -152,16 +170,22 @@ export const signin = function (
       "'",
   };
 };
+
+//FIXME:
 export const fetchUsers = function (role: string): { query: string } {
   return {
     query: "SELECT * FROM `" + role + "` WHERE isVerified=0",
   };
 };
+
+//TODO:Fetch  users by type
 export const fetchALLRows = function (tableName: string): { query: string } {
   return {
     query: "SELECT * FROM `" + tableName + "`",
   };
 };
+
+//TODO:Search user by name/phone_number
 export const searchRows = function (
   tableName: string,
   col: string,
@@ -171,6 +195,8 @@ export const searchRows = function (
     query: `SELECT * FROM ${tableName} WHERE ${col} LIKE "%${query}%"`,
   };
 };
+
+//TODO:delete user by pk
 export const deleteRow = function (
   tableName: string,
   id: string

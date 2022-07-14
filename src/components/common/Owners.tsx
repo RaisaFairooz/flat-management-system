@@ -11,10 +11,6 @@ import { handleDelete } from "./Residents";
 import Search from "./Search";
 
 const Owners = ({ type = "owners" }) => {
-  const open = useModalStore((state) => state.open);
-  const setOpen = useModalStore((state) => state.setOpen);
-  const [selected, setSelected] = useState(null);
-
   const { data, isError, isLoading, error } = useFetchQuery(type);
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -53,22 +49,15 @@ const Owners = ({ type = "owners" }) => {
         </svg>{" "}
         Search
       </Button>
-      {data && (
-        <Helper
-          data={data}
-          type={type}
-          open={open}
-          setOpen={setOpen}
-          selected={selected}
-          setSelected={setSelected}
-        />
-      )}
+      {data && <Helper data={data} type={type} />}
     </>
   );
 };
 
-const Helper = ({ data, type, open, setOpen, selected, setSelected }: any) => {
+export const Helper = ({ data, type }: any) => {
   const queryClient = useQueryClient();
+  const [editing, setEditing] = useState(false);
+  const [selected, setSelected] = useState(null);
   const rows = data.map((element: any) => (
     <tr key={element.id}>
       <td>{element.id}</td>
@@ -92,7 +81,7 @@ const Helper = ({ data, type, open, setOpen, selected, setSelected }: any) => {
               department: type === "owners" ? "demo" : element.department,
               salary: 0,
             });
-            setOpen();
+            setEditing(true);
           }}
           style={{
             cursor: "pointer",
@@ -133,7 +122,11 @@ const Helper = ({ data, type, open, setOpen, selected, setSelected }: any) => {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-      <ModalComponent open={open} setOpen={setOpen} message={`Edit owner`}>
+      <ModalComponent
+        open={editing}
+        setOpen={setEditing}
+        message={`Edit owner`}
+      >
         {selected && (
           <EditUserByRole
             role={type.slice(0, -1)}

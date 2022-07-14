@@ -27,7 +27,7 @@ export const adminMockData = [
     href: "/admin/dashboard/utilities",
   },
   {
-    title: "Notices",
+    title: "Notices & Complaints",
     icon: Receipt,
     color: "teal",
     href: "/admin/dashboard/notices",
@@ -58,6 +58,7 @@ export const sidebarMockData = [
   { icon: Gauge, label: "Dashboard", href: "/admin/dashboard" },
   { icon: User, label: "Account", href: "/admin/account" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
+  { icon: Settings, label: "Search", href: "/admin/dashboard/search" },
 ];
 
 export const roles = ["Editor", "Owner", "Resident", "Staff"];
