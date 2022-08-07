@@ -18,6 +18,51 @@ export const signupOwners = function (
       "')",
   };
 };
+
+//TODO:Flat add
+export const addFlat = function (
+  id: string,
+  description: JSON
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO flat(flat_id,description) VALUES('" +
+      id +
+      "','" +
+      description +
+      "')",
+  };
+};
+
+//TODO: Owner update
+export const updateFlat = function (
+  owner_id: string,
+  resident_id: string,
+  id: string
+): { query: string } {
+  console.log({ resident_id });
+  if (resident_id === "" || resident_id === null) {
+    return {
+      query: `UPDATE flat SET owner_id="${parseInt(
+        owner_id
+      )}" WHERE flat_id="${id}"`,
+    };
+  }
+  if (owner_id === "" || owner_id === null) {
+    return {
+      query: `UPDATE flat SET resident_id="${parseInt(
+        resident_id
+      )}" WHERE flat_id="${id}"`,
+    };
+  }
+  console.log({ owner_id });
+  return {
+    query: `UPDATE flat SET owner_id="${parseInt(
+      owner_id
+    )}", resident_id="${parseInt(resident_id)}" WHERE flat_id="${id}"`,
+  };
+};
+
 //TODO: Owner update
 export const updateOwners = function (
   name: string,
@@ -193,6 +238,12 @@ export const searchRows = function (
 ): { query: string } {
   return {
     query: `SELECT * FROM ${tableName} WHERE ${col} LIKE "%${query}%"`,
+  };
+};
+//TODO: Join
+export const findChild = function (): { query: string } {
+  return {
+    query: `SELECT s.flat_id,s.description,s.owner_id,s.resident_id, b.id AS o_id,b.name AS o_name,b.phone_number as o_phone_number,b.nid as o_nid,b.address_id as o_address_id,c.id AS r_id,c.name AS r_name,c.phone_number as r_phone_number,c.nid as r_nid,c.address_id as r_address_id,c.occupation,c.family_member FROM flat s LEFT JOIN owners b ON s.owner_id = b.id LEFT JOIN residents c ON s.resident_id  = c.id`,
   };
 };
 

@@ -57,7 +57,7 @@ const Owners = ({ type = "owners" }) => {
 export const Helper = ({ data, type }: any) => {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState({});
   const rows = data.map((element: any) => (
     <tr key={element.id}>
       <td>{element.id}</td>
