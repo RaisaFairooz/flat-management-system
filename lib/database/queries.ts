@@ -33,6 +33,20 @@ export const addFlat = function (
       "')",
   };
 };
+//TODO:Flat add
+export const addNotice = function (
+  heading: string,
+  description: string
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO notice(heading,description) VALUES('" +
+      heading +
+      "','" +
+      description +
+      "')",
+  };
+};
 
 //TODO: Owner update
 export const updateFlat = function (
@@ -72,6 +86,16 @@ export const updateOwners = function (
 ): { query: string } {
   return {
     query: `UPDATE owners SET name="${name}", phone_number="${phone_number}", address_id=${address_id} WHERE id=${id}`,
+  };
+};
+//TODO: Owner update
+export const updateNotice = function (
+  heading: string,
+  description: string,
+  id: any
+): { query: string } {
+  return {
+    query: `UPDATE notice SET heading="${heading}", description="${description}" WHERE id=${id}`,
   };
 };
 
