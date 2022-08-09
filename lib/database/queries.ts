@@ -47,6 +47,30 @@ export const addNotice = function (
       "')",
   };
 };
+//TODO:Flat add
+export const addComplaint = function (
+  heading: string,
+  description: string,
+  userId: string,
+  flat_id: any,
+  stat: string
+): { query: string } {
+  console.log({ flat_id });
+  return {
+    query:
+      "INSERT INTO complaint(user_id,flat_id,heading,description,status) VALUES('" +
+      userId +
+      "','" +
+      flat_id +
+      "','" +
+      heading +
+      "','" +
+      description +
+      "','" +
+      stat +
+      "')",
+  };
+};
 
 //TODO: Owner update
 export const updateFlat = function (
@@ -96,6 +120,16 @@ export const updateNotice = function (
 ): { query: string } {
   return {
     query: `UPDATE notice SET heading="${heading}", description="${description}" WHERE id=${id}`,
+  };
+};
+//TODO: Owner update
+export const updateComplaint = function (
+  heading: string,
+  description: string,
+  id: any
+): { query: string } {
+  return {
+    query: `UPDATE complaint SET heading="${heading}", description="${description}" WHERE id=${id}`,
   };
 };
 
@@ -262,6 +296,12 @@ export const searchRows = function (
 ): { query: string } {
   return {
     query: `SELECT * FROM ${tableName} WHERE ${col} LIKE "%${query}%"`,
+  };
+};
+//TODO:Search user by name/phone_number
+export const searchFlat = function (id: any): { query: string } {
+  return {
+    query: `SELECT flat_id FROM flat WHERE resident_id="${id}"`,
   };
 };
 //TODO: Join

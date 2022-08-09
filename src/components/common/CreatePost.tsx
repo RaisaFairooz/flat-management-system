@@ -11,7 +11,9 @@ const CreatePost = ({
   setDescription,
   label,
   type = "add",
+  subType = "notice",
   id = null,
+  userId = "01643089371",
 }: any) => {
   return (
     <>
@@ -26,6 +28,8 @@ const CreatePost = ({
         setDescription={setDescription}
         type={type}
         id={id}
+        subType={subType}
+        userId={userId}
       />
     </>
   );
@@ -34,11 +38,14 @@ const CreatePost = ({
 export default CreatePost;
 
 const createPost = async (data: any) => {
-  const { data: response } = await axios.post("/api/add_notice", data);
+  const { data: response } = await axios.post(`/api/add_${data.subType}`, data);
   return response.data;
 };
 const editPost = async (data: any) => {
-  const { data: response } = await axios.post("/api/edit_notice", data);
+  const { data: response } = await axios.post(
+    `/api/edit_${data.subType}`,
+    data
+  );
   return response.data;
 };
 
@@ -49,6 +56,8 @@ function Post({
   setDescription,
   type,
   id,
+  subType,
+  userId,
 }: any) {
   console.log({ id });
   const queryClient = useQueryClient();
@@ -58,24 +67,26 @@ function Post({
       showNotification({
         id: "load-data",
         loading: false,
-        title: "Notice posted",
+        title: `${subType} Posted`,
         message: "",
         autoClose: false,
         icon: <IconCheck />,
       });
+      setHeading("");
+      setDescription("");
     },
     onError: () => {
       showNotification({
         id: "error-data",
         loading: false,
-        title: "Could not post notification",
+        title: `Could not post ${subType}`,
         message: "Data will be loaded in 3 seconds, you cannot close this yet",
         autoClose: false,
         icon: <IconX />,
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries("notice");
+      queryClient.invalidateQueries(subType);
     },
   });
   const { mutate: editMutate } = useMutation(editPost, {
@@ -84,11 +95,13 @@ function Post({
       showNotification({
         id: "load-data",
         loading: false,
-        title: "Notice Edited",
+        title: `${subType} Edited`,
         message: "",
         autoClose: false,
         icon: <IconCheck />,
       });
+      setHeading("");
+      setDescription("");
     },
     onError: () => {
       showNotification({
@@ -101,7 +114,7 @@ function Post({
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries("notice");
+      queryClient.invalidateQueries(subType);
     },
   });
   const handleSubmit = (event: any) => {
@@ -110,8 +123,10 @@ function Post({
     const data = {
       heading,
       description,
+      subType,
+      userId,
     };
-    mutate(data);
+    mutate(data, subType);
   };
   const handleEdit = (event: any) => {
     event.preventDefault();
@@ -121,8 +136,9 @@ function Post({
       heading,
       description,
       id,
+      subType,
     };
-    editMutate(data);
+    editMutate(data, subType);
   };
   return (
     <form onSubmit={type === "edit" ? handleEdit : handleSubmit}>
