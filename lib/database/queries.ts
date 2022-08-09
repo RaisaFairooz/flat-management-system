@@ -124,12 +124,12 @@ export const updateNotice = function (
 };
 //TODO: Owner update
 export const updateComplaint = function (
-  heading: string,
-  description: string,
+  status: string,
+
   id: any
 ): { query: string } {
   return {
-    query: `UPDATE complaint SET heading="${heading}", description="${description}" WHERE id=${id}`,
+    query: `UPDATE complaint SET status="${status}" WHERE id=${id}`,
   };
 };
 

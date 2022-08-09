@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Button, Group, Text, Textarea } from "@mantine/core";
+import { Button, Group, Select, Text, Textarea } from "@mantine/core";
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 import { IconCheck, IconX } from "@tabler/icons";
 import { showNotification } from "@mantine/notifications";
+import { useRouter } from "next/router";
 const CreatePost = ({
   heading,
   setHeading,
@@ -61,6 +62,8 @@ function Post({
 }: any) {
   console.log({ id });
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const [status, setStatus] = useState("");
   const { mutate, isLoading } = useMutation(createPost, {
     onSuccess: (data) => {
       console.log(data);
@@ -133,8 +136,7 @@ function Post({
     console.log("edit");
     console.log(event);
     const data = {
-      heading,
-      description,
+      status,
       id,
       subType,
     };
@@ -142,18 +144,35 @@ function Post({
   };
   return (
     <form onSubmit={type === "edit" ? handleEdit : handleSubmit}>
-      <LongTextInput
-        size="sm"
-        value={heading}
-        setValue={setHeading}
-        id="Heading"
-      />
-      <LongTextInput
-        size="xl"
-        value={description}
-        setValue={setDescription}
-        id="Description"
-      />
+      {router.pathname.includes("/admin/complaints") ? (
+        <>
+          <Text>Edit status</Text>
+          <Select
+            data={["unresolved", "resolved", "pending"]}
+            value={status}
+            onChange={setStatus}
+            label="Status"
+            placeholder="Select Status"
+            size="md"
+            required
+          />
+        </>
+      ) : (
+        <>
+          <LongTextInput
+            size="sm"
+            value={heading}
+            setValue={setHeading}
+            id="Heading"
+          />
+          <LongTextInput
+            size="xl"
+            value={description}
+            setValue={setDescription}
+            id="Description"
+          />
+        </>
+      )}
       <Group position="right" mt="md">
         <Button type="submit">Post</Button>
       </Group>

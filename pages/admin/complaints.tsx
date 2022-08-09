@@ -1,6 +1,4 @@
 import CardComponent from "@/components/common/Card";
-import CreatePost from "@/components/common/CreatePost";
-import ModalComponent from "@/components/common/Modal";
 import useFetchQuery from "@/hooks/useFetchQuery";
 import { Grid } from "@mantine/core";
 import React from "react";
@@ -11,6 +9,7 @@ const Complaints = () => {
   if (isLoading) {
     return null;
   }
+  console.log({ data });
 
   return (
     <>
@@ -23,6 +22,8 @@ const Complaints = () => {
               headText={dt.heading}
               bodyText={dt.description}
               time={dt.time}
+              label="complaint"
+              status={dt.status}
             />
           ))}
       </Grid>
