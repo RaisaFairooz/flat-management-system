@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
 
-const fetcher = async ({ queryKey }: any) => {
+const fetcherFunction = async ({ queryKey }: any) => {
   const tableName = queryKey[0];
 
   return tableName === "flat"
@@ -10,7 +10,10 @@ const fetcher = async ({ queryKey }: any) => {
     : await axios.post("/api/fetcher", { tableName });
 };
 const useFetchQuery = (tableName = "flat") => {
-  const { data, isError, isLoading, error } = useQuery([tableName], fetcher);
+  const { data, isError, isLoading, error } = useQuery(
+    [tableName],
+    fetcherFunction
+  );
   return {
     data: data?.data,
     isError,
