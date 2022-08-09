@@ -12,10 +12,10 @@ const fetcher = async ({ queryKey }: any) => {
 const useFetchQuery = (tableName = "flat") => {
   const { data, isError, isLoading, error } = useQuery([tableName], fetcher);
   return {
-    data: data?.data,
     isError,
     isLoading,
     error,
+    data: data?.data,
   };
 };
 
