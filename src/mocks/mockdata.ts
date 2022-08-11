@@ -10,6 +10,8 @@ import {
   Home,
   Man,
   PlaylistAdd,
+  Login,
+  Logout,
 } from "tabler-icons-react";
 export const adminMockData = [
   // { title: "Credit cards", icon: CreditCard, color: "violet" },

@@ -287,6 +287,14 @@ export const fetchALLRows = function (tableName: string): { query: string } {
     query: "SELECT * FROM `" + tableName + "`",
   };
 };
+//TODO:Fetch  users by type
+export const fetchAllSameColumn = function (columnName: string): {
+  query: string;
+} {
+  return {
+    query: `SELECT ${columnName},role,id from managers UNION SELECT ${columnName},role,id from owners UNION SELECT ${columnName},role,id from residents UNION SELECT ${columnName},role,id from staffs`,
+  };
+};
 
 //TODO:Search user by name/phone_number
 export const searchRows = function (

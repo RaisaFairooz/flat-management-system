@@ -66,7 +66,12 @@ export default function NavbarMinimalColored({ children }: any) {
       </Navbar.Section>
       <Navbar.Section>
         <Group direction="column" align="center" spacing={0}>
-          <NavbarLink icon={Logout} label="Logout" href="/logout" />
+          <NavbarLink
+            icon={Logout}
+            label="Logout"
+            href="/logout"
+            onClick={() => console.log("clicked")}
+          />
         </Group>
       </Navbar.Section>
     </Navbar>
