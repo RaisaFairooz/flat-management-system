@@ -86,7 +86,6 @@ export default function NavbarMinimalColored({ children }: any) {
           icon={Login}
           label="Login"
           href="/signin"
-          onClick={() => console.log("clicked")}
         />}
         </Group>
       </Navbar.Section>
