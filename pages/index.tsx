@@ -19,7 +19,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         {
-          role===""?<Outsider role="guest"/>:<Insider role={role}/>
+          role===''?<Outsider role="guest"/>:<Insider role={role}/>
         }
       </main>
     </div>

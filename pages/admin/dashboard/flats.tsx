@@ -116,8 +116,8 @@ export const Helper = ({ data }: any) => {
       <td>
         <Edit
           onClick={() => {
-            setOwnerId(element.owner_id.toString());
-            setResidentId(element.resident_id.toString());
+            setOwnerId(element.owner_id?.toString()??"");
+            setResidentId(element.resident_id?.toString()??"");
             setSelected(element.flat_id);
             setEditing(true);
           }}

@@ -288,6 +288,12 @@ export const fetchALLRows = function (tableName: string): { query: string } {
   };
 };
 //TODO:Fetch  users by type
+export const fetchAllFlatWithNull = function (columnName: string): { query: string } {
+  return {
+    query: `SELECT * FROM flat WHERE ${columnName}_id IS NULL`,
+  };
+};
+//TODO:Fetch  users by type
 export const fetchAllSameColumn = function (columnName: string): {
   query: string;
 } {
