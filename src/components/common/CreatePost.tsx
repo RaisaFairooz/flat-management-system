@@ -15,6 +15,8 @@ const CreatePost = ({
   subType = "notice",
   id = null,
   userId = "01643089371",
+  status = null,
+  setStatus,
 }: any) => {
   return (
     <>
@@ -31,6 +33,8 @@ const CreatePost = ({
         id={id}
         subType={subType}
         userId={userId}
+        status={status}
+        setStatus={setStatus}
       />
     </>
   );
@@ -59,11 +63,12 @@ function Post({
   id,
   subType,
   userId,
+  status,
+  setStatus,
 }: any) {
   console.log({ id });
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [status, setStatus] = useState("");
   const { mutate, isLoading } = useMutation(createPost, {
     onSuccess: (data) => {
       console.log(data);

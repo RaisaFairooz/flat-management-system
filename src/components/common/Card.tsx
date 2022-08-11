@@ -18,6 +18,7 @@ export default function CardComponent({
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [heading, setHeading] = useState(headText);
+  const [statuses, setStatus] = useState(status);
   const [description, setDescription] = useState(bodyText);
   return (
     <Grid.Col span={4} style={{ minHeight: 200 }}>
@@ -65,7 +66,7 @@ export default function CardComponent({
             onClick={() =>
               handleDelete(
                 `/api/deleteRow?tableName=${label}&id=${id}`,
-                "notice",
+                label,
                 queryClient
               )
             }
@@ -85,6 +86,8 @@ export default function CardComponent({
           type="edit"
           subType={label}
           id={id}
+          status={statuses}
+          setStatus={setStatus}
         />
       </ModalComponent>
     </Grid.Col>

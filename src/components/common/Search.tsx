@@ -6,14 +6,13 @@ import { Helper } from "./Owners";
 
 const Search = ({ type }: any) => {
   const [value, setValue] = useState("");
-  const [table, setTable] = useState("");
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [editing, setEditing] = useState(false);
   const [selected, setSelected] = useState(null);
   const handleSearch = async () => {
     const response = await axios.get(
-      `/api/search?tableName=${table}&searchColumn=${
+      `/api/search?searchColumn=${
         value === "name" ? value : "Phone_number"
       }&searchParam=${search}`
     );
@@ -21,16 +20,6 @@ const Search = ({ type }: any) => {
   };
   return (
     <>
-      <Select
-        value={table}
-        placeholder="Search Table"
-        onChange={setTable}
-        data={["owners", "residents", "staffs"]}
-        sx={{
-          width: "200px",
-          marginBottom: "5px",
-        }}
-      />
       <div
         style={{
           display: "flex",
@@ -52,7 +41,7 @@ const Search = ({ type }: any) => {
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
         />
-        {table && value && search && (
+        {value && search && (
           <Button onClick={handleSearch}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +63,7 @@ const Search = ({ type }: any) => {
           </Button>
         )}
       </div>
-      {searchData.length > 0 && ["staffs", "owners"].includes(table) && (
+      {searchData.length > 0 && (
         <Helper
           type={table}
           data={searchData}
