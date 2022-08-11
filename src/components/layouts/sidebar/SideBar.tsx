@@ -7,13 +7,14 @@ import {
   createStyles,
   Group,
 } from "@mantine/core";
-import { Logout, SwitchHorizontal } from "tabler-icons-react";
+import { Login, Logout, SwitchHorizontal } from "tabler-icons-react";
 
 import { sidebarMockData as mockdata } from "src/mocks/mockdata";
 import { useStyles } from "./styles";
 import { NavbarLinkProps } from "src/types/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useUserStore } from "src/global/user";
 
 function NavbarLink({
   icon: Icon,
@@ -46,6 +47,8 @@ const useNavbarStyles = createStyles((theme) => ({
 export default function NavbarMinimalColored({ children }: any) {
   const router = useRouter();
   const { classes } = useNavbarStyles();
+  const user = useUserStore((state) => state.user);
+  const setData = useUserStore((state) => state.setData);
 
   const links = mockdata.map((link, index) => (
     <NavbarLink
@@ -66,12 +69,25 @@ export default function NavbarMinimalColored({ children }: any) {
       </Navbar.Section>
       <Navbar.Section>
         <Group direction="column" align="center" spacing={0}>
-          <NavbarLink
+          {user?.role!==""? <NavbarLink
             icon={Logout}
             label="Logout"
-            href="/logout"
-            onClick={() => console.log("clicked")}
-          />
+            href="/signin"
+            onClick={() => {
+              setData({
+
+                  role:"",
+                  id:"",
+                  phone_number:""
+                }
+              )
+            }}
+          />:<NavbarLink
+          icon={Login}
+          label="Login"
+          href="/signin"
+          onClick={() => console.log("clicked")}
+        />}
         </Group>
       </Navbar.Section>
     </Navbar>
