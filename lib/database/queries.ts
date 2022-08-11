@@ -290,7 +290,7 @@ export const fetchALLRows = function (tableName: string): { query: string } {
 //TODO:Fetch  users by type
 export const fetchAllFlatWithNull = function (columnName: string): { query: string } {
   return {
-    query: `SELECT * FROM flat WHERE ${columnName}_id IS NULL`,
+    query:columnName==="owner"? `SELECT * FROM flat WHERE ${columnName}_id=1`: `SELECT * FROM flat WHERE ${columnName}_id IS NULL`,
   };
 };
 //TODO:Fetch  users by type

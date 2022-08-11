@@ -1,21 +1,32 @@
 import useNullFlat from '@/hooks/useNullFlat';
-import { Button, Select, Table } from '@mantine/core'
+import { Button, Select, Table ,Text} from '@mantine/core'
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Edit } from 'tabler-icons-react';
 import ModalComponent from '../common/Modal';
+const dt=["Available for renting","Available for buying"]
 
 const Outsider = ({role}:any) => {
     const [value,setValue]=useState("");
-      const { data, isError, isLoading, error } = useNullFlat(value);
+    const [query,setQuery]=useState("");
+      const { data, isError, isLoading, error } = useNullFlat(query);
 
       return (
     <div>
         <Select
           value={value}
           placeholder="Browse by"
-          onChange={setValue}
-          data={["owner","resident"]}
+          onChange={(val)=>{
+            if(val===dt[0]){
+                setValue(val)
+                setQuery("resident")
+            }else{
+                setValue(val)
+                setQuery("owner")
+            }
+
+          }}
+          data={dt}
         />
         {data && <Helper data={data}/>}
 
@@ -30,35 +41,21 @@ export default Outsider
 
  
  const Helper = ({ data }: any) => {
+    const [editing,setEditing]=useState(false)
+    const [selected,setSelected]=useState({})
     console.log({ data });
     const rows = data.map((element: any) => (
       <tr key={element.flat_id}>
         <td>{element.flat_id}</td>
         <td>{element.description}</td>
         <td>
-          <Edit
-            onClick={() => {
-          
-            }}
-            style={{
-              cursor: "pointer",
-            }}
-          />
+         <Text style={{
+            cursor:"pointer"
+
+         }}
+         onClick={()=>{setEditing(true);setSelected(element)}}
+         >Request contact</Text>
         </td>
-        {/* <td>
-          <Trash
-            onClick={() =>
-              handleDelete(
-                `/api/deleteRow?tableName=${type}&id=${element.id}`,
-                type,
-                queryClient
-              )
-            }
-            style={{
-              cursor: "pointer",
-            }}
-          />
-        </td> */}
       </tr>
     ));
   
@@ -75,22 +72,27 @@ export default Outsider
           </thead>
           <tbody>{rows}</tbody>
         </Table>
-        {/* <ModalComponent
+        <ModalComponent
           open={editing}
           setOpen={setEditing}
           message={`Edit owner`}
         >
           {selected && (
             <Form
-              type="edit"
               data={selected}
-              ownerId={ownerId}
-              setOwnerId={setOwnerId}
-              residentId={residentId}
-              setResidentId={setResidentId}
             />
           )}
-        </ModalComponent> */}
+        </ModalComponent>
       </>
     );
   };
+
+
+  const Form = ({data}:any) => {
+    console.log(data)
+   return (
+     <div>Outsider</div>
+   )
+ }
+ 
+  
