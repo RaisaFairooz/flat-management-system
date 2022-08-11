@@ -124,12 +124,12 @@ export const updateNotice = function (
 };
 //TODO: Owner update
 export const updateComplaint = function (
-  heading: string,
-  description: string,
+  status: string,
+
   id: any
 ): { query: string } {
   return {
-    query: `UPDATE complaint SET heading="${heading}", description="${description}" WHERE id=${id}`,
+    query: `UPDATE complaint SET status="${status}" WHERE id=${id}`,
   };
 };
 
@@ -285,6 +285,14 @@ export const fetchUsers = function (role: string): { query: string } {
 export const fetchALLRows = function (tableName: string): { query: string } {
   return {
     query: "SELECT * FROM `" + tableName + "`",
+  };
+};
+//TODO:Fetch  users by type
+export const fetchAllSameColumn = function (columnName: string): {
+  query: string;
+} {
+  return {
+    query: `SELECT ${columnName},role,id from managers UNION SELECT ${columnName},role,id from owners UNION SELECT ${columnName},role,id from residents UNION SELECT ${columnName},role,id from staffs`,
   };
 };
 

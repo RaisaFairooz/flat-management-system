@@ -12,10 +12,13 @@ export default function CardComponent({
   headText,
   bodyText,
   time,
+  label = "notice",
+  status = null,
 }: any) {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [heading, setHeading] = useState(headText);
+  const [statuses, setStatus] = useState(status);
   const [description, setDescription] = useState(bodyText);
   return (
     <Grid.Col span={4} style={{ minHeight: 200 }}>
@@ -25,6 +28,20 @@ export default function CardComponent({
           <Badge color="pink" variant="light">
             {time.slice(0, 10)}
           </Badge>
+          {status && (
+            <Badge
+              color={
+                status === "resolved"
+                  ? "teal"
+                  : status === "unresolved"
+                  ? "red"
+                  : "pink"
+              }
+              variant="light"
+            >
+              {status}
+            </Badge>
+          )}
         </Group>
 
         <Text size="sm" color="dimmed">
@@ -48,8 +65,8 @@ export default function CardComponent({
           <Trash
             onClick={() =>
               handleDelete(
-                `/api/deleteRow?tableName=${"notice"}&id=${id}`,
-                "notice",
+                `/api/deleteRow?tableName=${label}&id=${id}`,
+                label,
                 queryClient
               )
             }
@@ -65,9 +82,12 @@ export default function CardComponent({
           setHeading={setHeading}
           description={description}
           setDescription={setDescription}
-          label="Edit  notice"
+          label={`Edit ${label}`}
           type="edit"
+          subType={label}
           id={id}
+          status={statuses}
+          setStatus={setStatus}
         />
       </ModalComponent>
     </Grid.Col>
