@@ -17,11 +17,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        {
-          role===''?<Outsider role="guest"/>:<Insider role={role}/>
-        }
-      </main>
+      
+         <Insider role={role}/>
+        
     </div>
   );
 };

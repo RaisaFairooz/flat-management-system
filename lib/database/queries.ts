@@ -67,6 +67,42 @@ export const addNotice = function (
   };
 };
 //TODO:Flat add
+export const addPost = function (
+  heading: string,
+  body: string,
+  role:string,
+  author_id:string
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO posts(author_id,role,header,body) VALUES('" +
+      author_id +
+      "','" +
+      role +
+      "','" +
+      heading+
+      "','" +
+      body+
+      "')",
+  };
+};
+//TODO:Flat add
+export const addComment = function (
+ post_id:string,
+ body:string,
+ commentor:string
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO comments(post_id,body,commentor) VALUES('" +
+      post_id +
+      "','" +
+      body +
+      "','"+commentor+
+      "')",
+  };
+};
+//TODO:Flat add
 export const addComplaint = function (
   heading: string,
   description: string,
@@ -310,6 +346,12 @@ export const fetchALLRows = function (tableName: string): { query: string } {
 export const fetchAllFlatWithNull = function (columnName: string): { query: string } {
   return {
     query:columnName==="owner"? `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id=1`: `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id IS NULL`,
+  };
+};
+//TODO:Fetch  users by type
+export const fetchPostsWithCommennt = function (): { query: string } {
+  return {
+    query:`SELECT f.id,f.author_id,f.role,f.header,f.body,o.body AS comments,o.commentor as commentor FROM posts f LEFT JOIN comments o ON f.id=o.post_id`,
   };
 };
 //TODO:Fetch  users by type
