@@ -1,3 +1,25 @@
+//FIXME: Features:
+// Admin can add/update/delete Flats,Owners,Residents,Staffs
+// Admin can post/delete notices ,
+// Owner/Resident can post Complaints
+// Owners/Residents can post in the forum and make comments on the individual post
+// Status of the complaints can be updated by the manager
+// Guest can see available flats to be rented or owned.They can send contact request for the purpose of renting/buying any Flats
+// Owners can see all the requests corresponding to his flats
+
+//FIXME: Tables:
+// address,
+// complaint,
+// comment,
+// flat,
+// managers,
+// notice,
+// owners,
+// requests,
+// posts,
+// residents,
+// staffs
+
 //TODO:Owner add
 export const signupOwners = function (
   name: string,
@@ -19,143 +41,6 @@ export const signupOwners = function (
   };
 };
 
-//TODO:Flat add
-export const addFlat = function (
-  id: string,
-  description: JSON
-): { query: string } {
-  return {
-    query:
-      "INSERT INTO flat(flat_id,description) VALUES('" +
-      id +
-      "','" +
-      description +
-      "')",
-  };
-};
-
-//TODO:Flat add
-export const sendRequest = function (
-  request:any
-): { query: string } {
-  console.log(JSON.stringify(request))
-  return {
-    query:
-      "INSERT INTO requests(contact, description, owner_id, flat_id) VALUES('" +
-      request.number +
-      "','" +
-      request.description +
-      "','" +
-      request.id +
-      "','" +
-      request.flat_id +
-      "')",
-  };
-};
-//TODO:Flat add
-export const addNotice = function (
-  heading: string,
-  description: string
-): { query: string } {
-  return {
-    query:
-      "INSERT INTO notice(heading,description) VALUES('" +
-      heading +
-      "','" +
-      description +
-      "')",
-  };
-};
-//TODO:Flat add
-export const addPost = function (
-  heading: string,
-  body: string,
-  role:string,
-  author_id:string
-): { query: string } {
-  return {
-    query:
-      "INSERT INTO posts(author_id,role,header,body) VALUES('" +
-      author_id +
-      "','" +
-      role +
-      "','" +
-      heading+
-      "','" +
-      body+
-      "')",
-  };
-};
-//TODO:Flat add
-export const addComment = function (
- post_id:string,
- body:string,
- commentor:string
-): { query: string } {
-  return {
-    query:
-      "INSERT INTO comments(post_id,body,commentor) VALUES('" +
-      post_id +
-      "','" +
-      body +
-      "','"+commentor+
-      "')",
-  };
-};
-//TODO:Flat add
-export const addComplaint = function (
-  heading: string,
-  description: string,
-  userId: string,
-  flat_id: any,
-  stat: string
-): { query: string } {
-  console.log({ flat_id });
-  return {
-    query:
-      "INSERT INTO complaint(user_id,flat_id,heading,description,status) VALUES('" +
-      userId +
-      "','" +
-      flat_id +
-      "','" +
-      heading +
-      "','" +
-      description +
-      "','" +
-      stat +
-      "')",
-  };
-};
-
-//TODO: Owner update
-export const updateFlat = function (
-  owner_id: string,
-  resident_id: string,
-  id: string
-): { query: string } {
-  console.log({ resident_id });
-  if (resident_id === "" || resident_id === null) {
-    return {
-      query: `UPDATE flat SET owner_id="${parseInt(
-        owner_id
-      )}" WHERE flat_id="${id}"`,
-    };
-  }
-  if (owner_id === "" || owner_id === null) {
-    return {
-      query: `UPDATE flat SET resident_id="${parseInt(
-        resident_id
-      )}" WHERE flat_id="${id}"`,
-    };
-  }
-  console.log({ owner_id });
-  return {
-    query: `UPDATE flat SET owner_id="${parseInt(
-      owner_id
-    )}", resident_id="${parseInt(resident_id)}" WHERE flat_id="${id}"`,
-  };
-};
-
 //TODO: Owner update
 export const updateOwners = function (
   name: string,
@@ -165,26 +50,6 @@ export const updateOwners = function (
 ): { query: string } {
   return {
     query: `UPDATE owners SET name="${name}", phone_number="${phone_number}", address_id=${address_id} WHERE id=${id}`,
-  };
-};
-//TODO: Owner update
-export const updateNotice = function (
-  heading: string,
-  description: string,
-  id: any
-): { query: string } {
-  return {
-    query: `UPDATE notice SET heading="${heading}", description="${description}" WHERE id=${id}`,
-  };
-};
-//TODO: Owner update
-export const updateComplaint = function (
-  status: string,
-
-  id: any
-): { query: string } {
-  return {
-    query: `UPDATE complaint SET status="${status}" WHERE id=${id}`,
   };
 };
 
@@ -305,6 +170,168 @@ export const updateAddress = function (
     query: `UPDATE address SET villageOrStreet="${village}", postal_code="${postal_code}", district="${district}" WHERE id=${id}`,
   };
 };
+
+//TODO:Flat add
+export const addFlat = function (
+  id: string,
+  description: JSON
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO flat(flat_id,description) VALUES('" +
+      id +
+      "','" +
+      description +
+      "')",
+  };
+};
+//TODO: Flat update (Assigning owner or resident to the flat)
+export const updateFlat = function (
+  owner_id: string,
+  resident_id: string,
+  id: string
+): { query: string } {
+  console.log({ resident_id });
+  if (resident_id === "" || resident_id === null) {
+    return {
+      query: `UPDATE flat SET owner_id="${parseInt(
+        owner_id
+      )}" WHERE flat_id="${id}"`,
+    };
+  }
+  if (owner_id === "" || owner_id === null) {
+    return {
+      query: `UPDATE flat SET resident_id="${parseInt(
+        resident_id
+      )}" WHERE flat_id="${id}"`,
+    };
+  }
+  console.log({ owner_id });
+  return {
+    query: `UPDATE flat SET owner_id="${parseInt(
+      owner_id
+    )}", resident_id="${parseInt(resident_id)}" WHERE flat_id="${id}"`,
+  };
+};
+
+//TODO:Notice add(by manager)
+export const addNotice = function (
+  heading: string,
+  description: string
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO notice(heading,description) VALUES('" +
+      heading +
+      "','" +
+      description +
+      "')",
+  };
+};
+
+//TODO: Notice update by manager
+export const updateNotice = function (
+  heading: string,
+  description: string,
+  id: any
+): { query: string } {
+  return {
+    query: `UPDATE notice SET heading="${heading}", description="${description}" WHERE id=${id}`,
+  };
+};
+
+//TODO:Post add to forum
+export const addPost = function (
+  heading: string,
+  body: string,
+  role: string,
+  author_id: string
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO posts(author_id,role,header,body) VALUES('" +
+      author_id +
+      "','" +
+      role +
+      "','" +
+      heading +
+      "','" +
+      body +
+      "')",
+  };
+};
+
+//TODO: Complaint by Owner/Resident
+export const addComplaint = function (
+  heading: string,
+  description: string,
+  userId: string,
+  flat_id: any,
+  stat: string
+): { query: string } {
+  console.log({ flat_id });
+  return {
+    query:
+      "INSERT INTO complaint(user_id,flat_id,heading,description,status) VALUES('" +
+      userId +
+      "','" +
+      flat_id +
+      "','" +
+      heading +
+      "','" +
+      description +
+      "','" +
+      stat +
+      "')",
+  };
+};
+
+//TODO: Complaint status updated by manager
+export const updateComplaint = function (
+  status: string,
+
+  id: any
+): { query: string } {
+  return {
+    query: `UPDATE complaint SET status="${status}" WHERE id=${id}`,
+  };
+};
+
+//TODO: Comment add to forum post
+export const addComment = function (
+  post_id: string,
+  body: string,
+  commentor: string
+): { query: string } {
+  return {
+    query:
+      "INSERT INTO comments(post_id,body,commentor) VALUES('" +
+      post_id +
+      "','" +
+      body +
+      "','" +
+      commentor +
+      "')",
+  };
+};
+
+//TODO: Guest requesting contact from owners for (renting/buying)
+export const sendRequest = function (request: any): { query: string } {
+  console.log(JSON.stringify(request));
+  return {
+    query:
+      "INSERT INTO requests(contact, description, owner_id, flat_id) VALUES('" +
+      request.number +
+      "','" +
+      request.description +
+      "','" +
+      request.id +
+      "','" +
+      request.flat_id +
+      "')",
+  };
+};
+
 export const fetch = () => {
   return {
     query: "SELECT LAST_INSERT_ID()",
@@ -342,19 +369,24 @@ export const fetchALLRows = function (tableName: string): { query: string } {
     query: "SELECT * FROM `" + tableName + "`",
   };
 };
-//TODO:Fetch  users by type
-export const fetchAllFlatWithNull = function (columnName: string): { query: string } {
+//TODO:Fetching flats with null resident/owners
+export const fetchAllFlatWithNull = function (columnName: string): {
+  query: string;
+} {
   return {
-    query:columnName==="owner"? `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id=1`: `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id IS NULL`,
+    query:
+      columnName === "owner"
+        ? `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id=1`
+        : `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id IS NULL`,
   };
 };
-//TODO:Fetch  users by type
+//TODO:Fetching post with comments
 export const fetchPostsWithCommennt = function (): { query: string } {
   return {
-    query:`SELECT f.id,f.author_id,f.role,f.header,f.body,o.body AS comments,o.commentor as commentor FROM posts f LEFT JOIN comments o ON f.id=o.post_id`,
+    query: `SELECT f.id,f.author_id,f.role,f.header,f.body,o.body AS comments,o.commentor as commentor FROM posts f LEFT JOIN comments o ON f.id=o.post_id`,
   };
 };
-//TODO:Fetch  users by type
+//TODO:Fetching all unique user
 export const fetchAllSameColumn = function (columnName: string): {
   query: string;
 } {
@@ -373,6 +405,9 @@ export const searchRows = function (
     query: `SELECT * FROM ${tableName} WHERE ${col} LIKE "%${query}%"`,
   };
 };
+
+//TODO:Generic Search  by name/phone_number
+
 export const searchRows2 = function (
   col: string,
   query: string
