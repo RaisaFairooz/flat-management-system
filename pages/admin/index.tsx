@@ -2,9 +2,17 @@ import CardComponent from "@/components/common/Card";
 import { Card, Grid } from "@mantine/core";
 import { Image, Text } from "@mantine/core";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import { useUserStore } from "src/global/user";
 
 const Index = () => {
+  const router=useRouter()
+  const {role} = useUserStore((state) => state.user);
+  
+  if(role!=="manager"){
+    router.push("/")
+  }
   return (
     <>
       <Demo />

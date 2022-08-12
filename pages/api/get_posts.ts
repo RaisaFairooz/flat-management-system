@@ -1,19 +1,8 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import excuteQuery from "lib/database/db";
-import { searchRows2 } from "lib/database/queries";
-export default async function handler(
-  req: any,
-  res: {
-    json: (arg0: {
-      status: any;
-      data?: object;
-      message?: string;
-      errMessage?: string;
-    }) => void;
-  }
-) {
-  const { tableName, searchColumn, searchParam } = req.query;
-  const query = searchRows2(searchColumn, searchParam);
+import { fetchPostsWithCommennt } from "lib/database/queries";
+export default async function handler(req: any, res: any) {
+  const query = fetchPostsWithCommennt();
   try {
     const response: any = await excuteQuery({ query });
     if (response) return res.json(response);

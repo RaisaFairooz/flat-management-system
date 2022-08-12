@@ -74,7 +74,7 @@ const Flats = () => {
 
   return (
     <>
-      <Header height={60} mb={120} className="flex">
+      <Header height={60} mb={20} className="flex">
         <Text
           component="span"
           align="center"
@@ -116,8 +116,8 @@ export const Helper = ({ data }: any) => {
       <td>
         <Edit
           onClick={() => {
-            setOwnerId(element.owner_id.toString());
-            setResidentId(element.resident_id.toString());
+            setOwnerId(element.owner_id?.toString() ?? "");
+            setResidentId(element.resident_id?.toString() ?? "");
             setSelected(element.flat_id);
             setEditing(true);
           }}

@@ -136,7 +136,7 @@ function Post({
     };
     mutate(data, subType);
   };
-  const handleEdit = (event: any) => {
+  const handleEditComplaint = (event: any) => {
     event.preventDefault();
     console.log("edit");
     console.log(event);
@@ -145,11 +145,27 @@ function Post({
       id,
       subType,
     };
+    console.log({data})
+
+    editMutate(data, subType);
+  };
+  const handleEditNotice = (event: any) => {
+    event.preventDefault();
+    console.log("edit");
+    console.log(event);
+    const data = {
+      heading,
+      description,
+      id,
+      subType
+    };
+    console.log({data})
+
     editMutate(data, subType);
   };
   return (
-    <form onSubmit={type === "edit" ? handleEdit : handleSubmit}>
-      {router.pathname.includes("/admin/complaints") ? (
+    <form onSubmit={type === "edit notice" ? handleEditNotice :type==="edit complaint"?handleEditComplaint: handleSubmit}>
+      {router.pathname.includes("/admin/complaints") && type==="edit complaint"? (
         <>
           <Text>Edit status</Text>
           <Select

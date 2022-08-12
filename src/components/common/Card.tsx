@@ -83,7 +83,7 @@ export default function CardComponent({
           description={description}
           setDescription={setDescription}
           label={`Edit ${label}`}
-          type="edit"
+          type={`edit ${label}`}
           subType={label}
           id={id}
           status={statuses}

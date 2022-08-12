@@ -7,7 +7,7 @@ const fetcher = async ({ queryKey }: any) => {
 
   return tableName === "flat"
     ? await axios.get("/api/fetch_flat")
-    : await axios.post("/api/fetcher", { tableName });
+    :tableName === "posts"?  await axios.get("/api/get_posts"):await axios.post("/api/fetcher", { tableName });
 };
 const useFetchQuery = (tableName = "flat") => {
   const { data, isError, isLoading, error } = useQuery([tableName], fetcher);

@@ -1,8 +1,10 @@
-import { Button, Select, TextInput } from "@mantine/core";
+import { Button, Select, Table, TextInput } from "@mantine/core";
 import axios from "axios";
 import React, { useState } from "react";
-import { SearchOff, UserSearch } from "tabler-icons-react";
-import { Helper } from "./Owners";
+import { useQueryClient } from "react-query";
+import { Edit, SearchOff, Trash, UserSearch } from "tabler-icons-react";
+import ModalComponent from "./Modal";
+import { handleDelete } from "./Residents";
 
 const Search = ({ type }: any) => {
   const [value, setValue] = useState("");
@@ -65,7 +67,7 @@ const Search = ({ type }: any) => {
       </div>
       {searchData.length > 0 && (
         <Helper
-          type={table}
+          type={"table"}
           data={searchData}
           setOpen={setEditing}
           setSelected={setSelected}
@@ -76,3 +78,34 @@ const Search = ({ type }: any) => {
 };
 
 export default Search;
+
+
+const Helper = ({ data, type }: any) => {
+  const queryClient = useQueryClient();
+  const [editing, setEditing] = useState(false);
+  const [selected, setSelected] = useState({});
+  const rows = data.map((element: any) => (
+    <tr key={element.id}>
+      <td>{element.name}</td>
+      <td>{element.phone_number}</td>
+      <td>{element.role}</td>
+     
+    </tr>
+  ));
+
+  return (
+    <>
+      {" "}
+      <Table horizontalSpacing="xl" verticalSpacing="xl" fontSize="lg">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>role</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </>
+  );
+};
