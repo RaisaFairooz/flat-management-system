@@ -20,8 +20,12 @@ export default function AuthenticationTitle() {
   const [mesage, setMessage] = useState("");
 
   console.log({ user });
-  if (user?.role !== "") {
+  if (user?.role === "owner") {
+    router.push(`/owners/${user.id}`)
+  }else if(user?.role==="resident"){
     router.push("/");
+  }else if(user?.role==="manager"){
+    router.push("/admin")
   }
 
   const handleSubmit = async () => {

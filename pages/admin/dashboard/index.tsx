@@ -3,12 +3,19 @@ import { Card, Text, SimpleGrid, UnstyledButton, Drawer } from "@mantine/core";
 import { adminMockData as mockdata } from "src/mocks/mockdata";
 import { useStyles } from "./styles";
 import NavbarMinimalColored from "@/components/layouts/sidebar/SideBar";
-import { SideDrawer } from "@/components/layouts/sidebar/Drawer";
 import LayOut from "@/components/layouts";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useUserStore } from "src/global/user";
 
 export default function ActionsGrid() {
   const { classes, theme } = useStyles();
+ const router=useRouter()
+  const {role} = useUserStore((state) => state.user);
+  if(role!=="manager"){
+    router.push("/")
+
+  }
 
   const items = mockdata.map((item) => (
     <Link key={item.title} href={item.href}>

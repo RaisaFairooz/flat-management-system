@@ -2,13 +2,16 @@ import Insider from "@/components/pages/Insider";
 import Outsider from "@/components/pages/Outsider";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+import { useRouter } from "next/router";
 import { useUserStore } from "src/global/user";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const router=useRouter()
   const {role} = useUserStore((state) => state.user);
   console.log({role})
+
+  
   return (
     <div className={styles.container}>
       <Head>

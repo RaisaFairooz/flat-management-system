@@ -72,7 +72,7 @@ export default function NavbarMinimalColored({ children }: any) {
           {user?.role!==""? <NavbarLink
             icon={Logout}
             label="Logout"
-            href="/signin"
+            href="/guest"
             onClick={() => {
               setData({
 
