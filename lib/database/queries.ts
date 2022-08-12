@@ -373,6 +373,14 @@ export const searchRows = function (
     query: `SELECT * FROM ${tableName} WHERE ${col} LIKE "%${query}%"`,
   };
 };
+export const searchRows2 = function (
+  col: string,
+  query: string
+): { query: string } {
+  return {
+    query: `SELECT * FROM (SELECT name,phone_number,role FROM owners UNION SELECT name,phone_number,role FROM residents UNION SELECT name,phone_number,role FROM staffs UNION SELECT name,phone_number,role FROM managers) s WHERE ${col} LIKE "%${query}%"`,
+  };
+};
 //TODO:Search user by name/phone_number
 export const searchFlat = function (id: any): { query: string } {
   return {
