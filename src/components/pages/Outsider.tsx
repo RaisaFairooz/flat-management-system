@@ -1,8 +1,10 @@
 import useNullFlat from '@/hooks/useNullFlat';
-import { Button, Select, Table ,Text} from '@mantine/core'
+import { Button, Group, Select, Table ,Text, Textarea, TextInput} from '@mantine/core'
+import { showNotification, updateNotification } from '@mantine/notifications';
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Edit } from 'tabler-icons-react';
+import { useQueryClient } from 'react-query';
+import { Check, Cross, Edit } from 'tabler-icons-react';
 import ModalComponent from '../common/Modal';
 const dt=["Available for renting","Available for buying"]
 
@@ -53,7 +55,7 @@ export default Outsider
             cursor:"pointer"
 
          }}
-         onClick={()=>{setEditing(true);setSelected(element)}}
+         onClick={()=>{setEditing(true);setSelected({element})}}
          >Request contact</Text>
         </td>
       </tr>
@@ -88,10 +90,68 @@ export default Outsider
   };
 
 
-  const Form = ({data}:any) => {
-    console.log(data)
+  const Form = ({data:{element}}:any) => {
+    const queryClient=useQueryClient()
+    console.log(element)
+    const [number,setNumber]=useState("")
+    const [description,setDescription]=useState("")
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        showNotification({
+          id: "load-data",
+          loading: true,
+          title: "Requesting",
+          message: "Please wait",
+          autoClose: false,
+          disallowClose: true,
+        });
+        const requests={
+            flat_id: element.flat_id,
+            number,
+            description,
+            id:`${element.owner_id}`
+            
+          }
+       
+          console.log(requests)
+         
+        const response = await axios.post("/api/request",requests);
+        console.log(response);
+        updateNotification({
+          id: "load-data",
+          color: response.data.affectedRows ? "teal" : "red",
+          title: response.data.affectedRows ? "Request sent" : "Error",
+          message: response.data.affectedRows
+            ? "Request was sent"
+            : response.data.error.sqlMessage,
+          icon: response.data.affectedRows ? <Check /> : <Cross />,
+          autoClose: 2000,
+        });
+        queryClient.invalidateQueries("owners");
+      };
    return (
-     <div>Outsider</div>
+    <form onSubmit={handleSubmit}>
+        <TextInput
+          label="Phone number"
+          placeholder="your phone number(11 digit)"
+          value={number}
+          onChange={(e) => setNumber(e.currentTarget.value)}
+          required
+        />
+        <Textarea
+            placeholder="Description"
+            label="Description"
+            required
+            value={description}
+            onChange={(event) => setDescription(event.currentTarget.value)}
+          />
+          <Group position="right" mt="md">
+        <Button type="submit"           disabled={number.length !== 11}
+>
+          Request
+        </Button>
+      </Group>
+    </form>
    )
  }
  

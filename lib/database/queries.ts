@@ -33,6 +33,25 @@ export const addFlat = function (
       "')",
   };
 };
+
+//TODO:Flat add
+export const sendRequest = function (
+  request:any
+): { query: string } {
+  console.log(JSON.stringify(request))
+  return {
+    query:
+      "INSERT INTO requests(contact, description, owner_id, flat_id) VALUES('" +
+      request.number +
+      "','" +
+      request.description +
+      "','" +
+      request.id +
+      "','" +
+      request.flat_id +
+      "')",
+  };
+};
 //TODO:Flat add
 export const addNotice = function (
   heading: string,
@@ -290,7 +309,7 @@ export const fetchALLRows = function (tableName: string): { query: string } {
 //TODO:Fetch  users by type
 export const fetchAllFlatWithNull = function (columnName: string): { query: string } {
   return {
-    query:columnName==="owner"? `SELECT * FROM flat WHERE ${columnName}_id=1`: `SELECT * FROM flat WHERE ${columnName}_id IS NULL`,
+    query:columnName==="owner"? `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id=1`: `SELECT f.flat_id,f.description,f.owner_id,f.resident_id,o.requests FROM flat f INNER JOIN owners o ON f.owner_id=o.id WHERE ${columnName}_id IS NULL`,
   };
 };
 //TODO:Fetch  users by type
@@ -321,7 +340,7 @@ export const searchFlat = function (id: any): { query: string } {
 //TODO: Join
 export const findChild = function (): { query: string } {
   return {
-    query: `SELECT s.flat_id,s.description,s.owner_id,s.resident_id, b.id AS o_id,b.name AS o_name,b.phone_number as o_phone_number,b.nid as o_nid,b.address_id as o_address_id,c.id AS r_id,c.name AS r_name,c.phone_number as r_phone_number,c.nid as r_nid,c.address_id as r_address_id,c.occupation,c.family_member FROM flat s LEFT JOIN owners b ON s.owner_id = b.id LEFT JOIN residents c ON s.resident_id  = c.id`,
+    query: `SELECT s.flat_id,s.description,s.owner_id,s.resident_id, b.id AS o_id,b.name AS o_name,b.phone_number as o_phone_number,b.nid as o_nid,b.address_id as o_address_id,b.requests as o_requests,c.id AS r_id,c.name AS r_name,c.phone_number as r_phone_number,c.nid as r_nid,c.address_id as r_address_id,c.occupation,c.family_member FROM flat s LEFT JOIN owners b ON s.owner_id = b.id LEFT JOIN residents c ON s.resident_id  = c.id`,
   };
 };
 
