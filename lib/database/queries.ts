@@ -1,24 +1,25 @@
 //FIXME: Features:
-// Admin can add/update/delete Flats,Owners,Residents,Staffs
-// Admin can post/delete notices ,
-// Owner/Resident can post Complaints
-// Owners/Residents can post in the forum and make comments on the individual post
-// Status of the complaints can be updated by the manager
-// Guest can see available flats to be rented or owned.They can send contact request for the purpose of renting/buying any Flats
-// Owners can see all the requests corresponding to his flats
+// 1. Admin can add/update/delete Flats,Owners,Residents,Staffs
+// 2. Admin can post/delete notices ,
+// 3. Owner/Resident can post Complaints
+// 4. Owners/Residents can post in the forum and make comments on the individual post
+// 5. Status of the complaints can be updated by the manager
+// 6. Guest can see available flats to be rented or owned.They can send contact request
+// 7. for the purpose of renting/buying any Flats
+// 8. Owners can see all the requests corresponding to his flats
 
 //FIXME: Tables:
-// address,
-// complaint,
-// comment,
-// flat,
-// managers,
-// notice,
-// owners,
-// requests,
-// posts,
-// residents,
-// staffs
+// 1. address,
+// 2. complaint,
+// 3. comment,
+// 4. flat,
+// 5. managers,
+// 6. notice,
+// 7. owners,
+// 8. requests,
+// 9. posts,
+// 10. residents,
+// 11. staffs
 
 //TODO:Owner add
 export const signupOwners = function (
